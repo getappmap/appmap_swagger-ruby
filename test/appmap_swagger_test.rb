@@ -2,10 +2,6 @@ require "test_helper"
 
 class AppmapSwaggerTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::AppmapSwagger::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert false
+    refute_nil ::AppMap::Swagger::VERSION
   end
 end

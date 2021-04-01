@@ -1,38 +1,95 @@
-# AppmapSwagger
+# `appmap_swagger`
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/appmap_swagger`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem provides a Rake task called `appmap:swagger` that generates [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/applandinc/appmap-ruby) data.
 
-TODO: Delete this and the text above, and describe your gem
+It depends on an NPM package called [@appland/appmap-swagger](https://www.npmjs.com/package/@appland/appmap-swagger), which does most of the heavy lifting of converting AppMaps to Swagger. This gem adds the Rake task and some niceties such as Rails integration.
+
+# How it works
+
+The Rake task `appmap:swagger`:
+
+1. Requires Node.js, and it requires the `@appland/appmap-swagger` package to be installed from NPM.
+2. Runs the Node.js program `appmap-swagger` to generate Swagger YAML.
+3. Merges the generated Swagger with a template file.
+4. Applies some sensible defaults for Ruby, and Ruby on Rails.
+5. Outputs two files to the specified directory (default: `swagger`):
+     1. `openapi.yaml` Full Swagger, including documentation and examples.
+     2. `openapi_stable.yaml` Swagger without documentation and examples, so that it's more stable across versions.
+
+`openapi_stable.yaml` is ideal for use in code reviews, to see if (and how) web services have been changed.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'appmap_swagger'
+group :development do
+  gem 'appmap_swagger'
+end
 ```
 
 And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+# Usage
 
-    $ gem install appmap_swagger
+## Defining the `appmap:swagger` Rake task
 
-## Usage
+You need to define the `appmap:swagger` Rake task. In Rails, this is done by creating a file like `lib/tasks/appmap.rake`.
 
-TODO: Write usage instructions here
+In the file, check if `AppMap` is loaded, and then configure the Rake task. You'll probably want to provide
+a project name and version. (The default project name is determined from your Rails Application class name and might be fine, actually).
+
+```ruby
+  if defined?(AppMap::Swagger)
+    AppMap::Swagger::RakeTask.new.tap do |task|
+      task.project_name = 'My Server API'
+      # You may not have a VERSION file. Do what works best for you.
+      task.project_version = "v#{File.read(File.join(Rails.root, 'VERSION')).strip}"
+    end
+  end
+```
+
+## Incorporating the Swagger API and UI
+
+Two other gems work great with `appmap:swagger`: `rswag-api` and `rswag-ui` from [rswag](https://github.com/rswag/rswag).
+
+Install in your Gemfile:
+
+```ruby
+# By default, let's not run this in production until we've thought about the implications.
+group :test, :development do
+  gem 'rswag-api'
+  gem 'rswag-ui'
+end
+```
+
+Then run the install commands:
+
+```sh-session
+$ rails g rswag:api:install
+$ rails g rswag:ui:install
+```
+
+Update `routes.rb`:
+
+```ruby
+  if defined?(Rswag)
+    mount Rswag::Ui::Engine => '/api-docs'
+    mount Rswag::Api::Engine => '/api-docs'
+  end
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bundle` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To release a new version, update the version number in `version.rb`, and then run `bundle exec rake gem:release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/appmap_swagger.
+Bug reports and pull requests are welcome on GitHub at https://github.com/applandinc/appmap_swagger-ruby.
 
 
 ## License
