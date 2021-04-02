@@ -1,12 +1,12 @@
 # `appmap_swagger`
 
-This gem provides a Rake task called `appmap:swagger` that generates [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/applandinc/appmap-ruby) data.
+This gem provides a Rake task called `swagger` that generates [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/applandinc/appmap-ruby) data.
 
 It depends on an NPM package called [@appland/appmap-swagger](https://www.npmjs.com/package/@appland/appmap-swagger), which does most of the heavy lifting of converting AppMaps to Swagger. This gem adds the Rake task and some niceties such as Rails integration.
 
 # How it works
 
-The Rake task `appmap:swagger`:
+The Rake task `swagger`:
 
 1. Requires Node.js, and it requires the `@appland/appmap-swagger` package to be installed from NPM.
 2. Runs the Node.js program `appmap-swagger` to generate Swagger YAML.
@@ -42,6 +42,7 @@ In the file, check if `AppMap` is loaded, and then configure the Rake task. You'
 a project name and version. (The default project name is determined from your Rails Application class name and might be fine, actually).
 
 ```ruby
+namespace :appmap do
   if defined?(AppMap::Swagger)
     AppMap::Swagger::RakeTask.new.tap do |task|
       task.project_name = 'My Server API'
@@ -49,6 +50,7 @@ a project name and version. (The default project name is determined from your Ra
       task.project_version = "v#{File.read(File.join(Rails.root, 'VERSION')).strip}"
     end
   end
+end
 ```
 
 ## Incorporating the Swagger API and UI
