@@ -25,8 +25,8 @@ module AppMap
         module_parent_name = ->(cls) { cls.name =~ /::[^:]+\Z/ ? $`.freeze : nil }
         
         @project_name    = \
-          if defined?(Rails)
-            [ module_parent_name.(Rails.application.class).humanize.titleize, 'API' ].join(' ')
+          if defined?(::Rails)
+            [ module_parent_name.(::Rails.application.class).humanize.titleize, 'API' ].join(' ')
           else
             'MyProject API'
           end
