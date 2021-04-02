@@ -12,11 +12,10 @@ module AppMap
       DEFAULT_OUTPUT_DIR = 'swagger'
       DEFAULT_SWAGGERGEN = './node_modules/@appland/appmap-swagger/cli.js'
 
-      attr_accessor :name, :verbose, :swaggergen, :appmap_dir, :output_dir, :project_name, :project_version
+      attr_accessor :name, :swaggergen, :appmap_dir, :output_dir, :project_name, :project_version
 
       def initialize(*args, &task_block)
         @name            = args.shift || :swagger
-        @verbose         = true
         @swaggergen      = DEFAULT_SWAGGERGEN
         @appmap_dir      = DEFAULT_APPMAP_DIR
         @output_dir      = DEFAULT_OUTPUT_DIR
@@ -36,7 +35,11 @@ module AppMap
         define(args, &task_block)
       end
 
-      def run_task(verbose)
+      def verbose
+        Rake.verbose == true
+      end
+
+      def run_task
         FileUtils.mkdir_p output_dir
 
         do_fail = lambda do |msg|
@@ -90,9 +93,9 @@ module AppMap
         desc "Generate Swagger from AppMaps" unless ::Rake.application.last_description
 
         task(name, *args) do |_, task_args|
-          RakeFileUtils.__send__(:verbose, verbose) do
+          RakeFileUtils.__send__(:verbose, Rake.verbose == true) do
             task_block.call(*[self, task_args].slice(0, task_block.arity)) if task_block
-            run_task verbose
+            run_task
           end
         end
       end
