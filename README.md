@@ -44,7 +44,8 @@ a project name and version. (The default project name is determined from your Ra
 ```ruby
 namespace :appmap do
   if defined?(AppMap::Swagger)
-    AppMap::Swagger::RakeTask.new.tap do |task|
+    # In a Rails app, add a dependency on the :environment task
+    AppMap::Swagger::RakeTask.new(:swagger, [ :environment ]).tap do |task|
       task.project_name = 'My Server API'
       # You may not have a VERSION file. Do what works best for you.
       task.project_version = "v#{File.read(File.join(Rails.root, 'VERSION')).strip}"
