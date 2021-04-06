@@ -56,7 +56,7 @@ a project name and version. (The default project name is determined from your Ra
 
 ```ruby
 namespace :appmap do
-  if defined?(AppMap::Swagger)
+  def swagger_tasks
     # In a Rails app, add a dependency on the :environment task.
     AppMap::Swagger::RakeTask.new(:swagger, [] => [ :environment ]).tap do |task|
       task.project_name = 'My Server API'
@@ -71,6 +71,17 @@ namespace :appmap do
       task.swagger_file = 'swagger/openapi_stable.yaml'
     end
   end
+
+  def swagger_defined?
+    begin
+      AppMap::Swagger::RakeTask
+    rescue NameError
+      warn "AppMap::Swagger is not available in Rails environment #{Rails.env}"
+      false
+    end  
+  end
+
+  swagger_tasks if swagger_defined?
 end
 ```
 
