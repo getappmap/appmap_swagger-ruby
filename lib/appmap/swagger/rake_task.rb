@@ -43,12 +43,12 @@ module AppMap
         FileUtils.mkdir_p output_dir
 
         do_fail = lambda do |msg|
-          warn msg if verbose
+          warn msg
           exit $?.exitstatus || 1
         end
 
         return do_fail.(%Q('node' not found; please install NodeJS)) unless system('node --version 2>&1 > /dev/null')
-        return do_fail.(%Q('#{swaggergen}' not found; please install appmap-swagger from NPM)) unless File.exists?(swaggergen)
+        return do_fail.(%Q('#{swaggergen}' not found; please install @appland/appmap-swagger from NPM)) unless File.exists?(swaggergen)
 
         warn swagger_command.join(' ') if verbose
 

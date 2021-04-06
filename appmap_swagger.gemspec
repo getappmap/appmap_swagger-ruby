@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rdoc'
   spec.add_dependency 'reverse_markdown'
   spec.add_dependency 'activesupport'
+  spec.add_dependency 'hashdiff'
 
   spec.add_development_dependency 'minitest'
 end
