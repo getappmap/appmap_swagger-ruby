@@ -2,7 +2,14 @@
 
 This gem provides a Rake task called `swagger` that generates [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/applandinc/appmap-ruby) data.
 
-It depends on an NPM package called [@appland/appmap-swagger](https://www.npmjs.com/package/@appland/appmap-swagger), which does most of the heavy lifting of converting AppMaps to Swagger. This gem adds the Rake task and some niceties such as Rails integration.
+It depends on an NPM package called [@appland/appmap-swagger](https://www.npmjs.com/package/@appland/appmap-swagger), which does most of the heavy lifting of converting AppMaps to Swagger.
+
+To the NPM package, this gem adds:
+
+* A Rake task - Normally configured as `appmap:swagger`.
+* Rails integration - For example, default configuration of the application name.
+* Swagger "diff" - Smart comparison of the current revision Swagger YAML to a base revision.
+
 
 # How it works
 
@@ -17,6 +24,12 @@ The Rake task `swagger`:
      2. `openapi_stable.yaml` Swagger without documentation and examples, so that it's more stable across versions.
 
 `openapi_stable.yaml` is ideal for use in code reviews, to see if (and how) web services have been changed.
+
+The Rake task `swagger:diff`:
+
+1. Computes a smart "diff" between the current revision Swagger and base revision.
+2. Prints this diff in a user-friendly format, suitable for inclusion in a pull request or issue comment.
+
 
 ## Installation
 
@@ -50,8 +63,40 @@ namespace :appmap do
       # You may not have a VERSION file. Do what works best for you.
       task.project_version = "v#{File.read(File.join(Rails.root, 'VERSION')).strip}"
     end
+
+    AppMap::Swagger::RakeDiffTask.new(:'swagger:diff', [ :base, :swagger_file ]).tap do |task|
+      # Default base; can be overridden by the :base task argument
+      task.base = 'remotes/origin/main'
+      # Default swagger file; can be overridden by the :swagger_file task argument
+      task.swagger_file = 'swagger/openapi_stable.yaml'
+    end
   end
 end
+```
+
+## Example
+
+```sh-session
+$ ./bin/rake appmap:swagger:diff
+changed       @ info.version
+old value     : v0.22.0
+new value     : v0.22.1
+
+added         @ paths."/api/api_keys".delete.responses
+added key     : 200
+added value   : {"content"=>{"application/json"=>{}}}
+
+removed       @ paths."/scenarios/{id}".put.requestBody.content."application/json".schema.properties.scenario.properties
+removed key   : mapset
+removed value : {"type"=>"string"}
+
+removed       @ paths."/scenarios/{scenario_id}/save_as".post.requestBody.content."application/json".schema.properties.save_as.properties
+removed key   : feature
+removed value : {"type"=>"string"}
+
+removed       @ paths."/scenarios/{scenario_id}/save_as".post.requestBody.content."application/json".schema.properties.save_as.properties
+removed key   : feature_group
+removed value : {"type"=>"string"}
 ```
 
 ## Incorporating the Swagger API and UI
