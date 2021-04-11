@@ -10,6 +10,12 @@ To the NPM package, this gem adds:
 * Rails integration - For example, default configuration of the application name.
 * Swagger "diff" - Smart comparison of the current revision Swagger YAML to a base revision.
 
+# Quick start video
+
+Check out [Generate Swagger for your Rails project, with no code changes, in 2 ¹/₂ minutes](https://dev.to/appland/generate-swagger-for-your-rails-project-with-no-code-changes-in-2-minutes-3abj)
+
+[![Introducing appmap_swagger](https://user-images.githubusercontent.com/86395/114316594-3f418400-9ad2-11eb-9449-683fd6d34963.png)](https://dev.to/appland/generate-swagger-for-your-rails-project-with-no-code-changes-in-2-minutes-3abj)
+
 
 # How it works
 
