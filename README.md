@@ -42,7 +42,7 @@ The Rake task `swagger:diff`:
 Add this line to your application's Gemfile:
 
 ```ruby
-group :development do
+group :development, :test do
   gem 'appmap_swagger'
 end
 ```
@@ -53,16 +53,16 @@ And then execute:
 
 # Usage
 
-## Defining the `appmap:swagger` Rake task
+## Defining the `appmap:swagger` Rake tasks
 
-You need to define the `appmap:swagger` Rake task. In Rails, this is done by creating a file like `lib/tasks/appmap.rake`.
+You need to define the `appmap:swagger` and `appmap:swagger:diff` Rake tasks. In Rails, this is done by creating a file like `lib/tasks/appmap.rake`.
 
-In the file, check if `AppMap` is loaded, and then configure the Rake task. You'll probably want to provide
+In the file, check if `appmap_swagger` is defined, and then configure the Rake tasks. You'll probably want to provide
 a project name and version. (The default project name is determined from your Rails Application class name and might be fine, actually).
 
 ```ruby
 namespace :appmap do
-  def swagger_tasks
+  if %w[test development].member?(Rails.env)
     # In a Rails app, add a dependency on the :environment task.
     AppMap::Swagger::RakeTask.new(:swagger, [] => [ :environment ]).tap do |task|
       task.project_name = 'My Server API'
@@ -77,17 +77,6 @@ namespace :appmap do
       task.swagger_file = 'swagger/openapi_stable.yaml'
     end
   end
-
-  def swagger_defined?
-    begin
-      AppMap::Swagger::RakeTask
-    rescue NameError
-      warn "AppMap::Swagger is not available in Rails environment #{Rails.env}"
-      false
-    end  
-  end
-
-  swagger_tasks if swagger_defined?
 end
 ```
 
@@ -155,7 +144,6 @@ To release a new version, update the version number in `version.rb`, and then ru
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/applandinc/appmap_swagger-ruby.
-
 
 ## License
 
