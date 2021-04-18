@@ -36,8 +36,13 @@ The Rake task `swagger:diff`:
 1. Computes a smart "diff" between the current revision Swagger and base revision.
 2. Prints this diff in a user-friendly format, suitable for inclusion in a pull request or issue comment.
 
-
 ## Installation
+
+1. Install Node.js.
+
+2. Install the `@appland/appmap-swagger` package from NPM.
+
+3. Install the `appmap_swagger` Gem.
 
 Add this line to your application's Gemfile:
 
@@ -51,14 +56,15 @@ And then execute:
 
     $ bundle install
 
-# Usage
+4. Define the Rake tasks `appmap:swagger` and `appmap:swagger:diff`.
 
-## Defining the `appmap:swagger` Rake tasks
+You need to define the Rake tasks, which by default are named `swagger` and `swagger:diff`. They are normally placed
+in a namespace `appmap`, to make full task names `appmap:swagger` and `appmap:swagger:diff`.
 
-You need to define the `appmap:swagger` and `appmap:swagger:diff` Rake tasks. In Rails, this is done by creating a file like `lib/tasks/appmap.rake`.
+To add the Rake tasks to a Rails app, add `lib/tasks/appmap.rake`.
 
-In the file, check if `appmap_swagger` is defined, and then configure the Rake tasks. You'll probably want to provide
-a project name and version. (The default project name is determined from your Rails Application class name and might be fine, actually).
+In the file, check the Rails environment, and then configure the Rake tasks. You'll probably want to provide
+a project name and version. (The default project name is determined from your Rails Application class name and might work fine).
 
 ```ruby
 namespace :appmap do
@@ -80,7 +86,7 @@ namespace :appmap do
 end
 ```
 
-## Example
+## Usage example
 
 ```sh-session
 $ ./bin/rake appmap:swagger:diff
