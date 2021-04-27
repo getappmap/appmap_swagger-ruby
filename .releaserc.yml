@@ -1,0 +1,13 @@
+branches:
+  - main
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/changelog'
+  - 'semantic-release-rubygem'
+  - - '@semantic-release/git'
+    - assets:
+        - CHANGELOG.md
+        - appmap_swagger.gemspec
+        - lib/appmap/swagger/version.rb
+  - '@semantic-release/github'
