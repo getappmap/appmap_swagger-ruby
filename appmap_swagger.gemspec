@@ -5,7 +5,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'appmap/swagger/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'appmap_swagger'
+  # ability to parameterize gem name is added intentionally, 
+  # to support the possibility of unofficial releases, e.g. during CI tests
+  spec.name          = (ENV['GEM_ALTERNATIVE_NAME'].to_s.empty? ? 'appmap_swagger' : ENV["GEM_ALTERNATIVE_NAME"] )
   spec.version       = AppMap::Swagger::VERSION
   spec.authors       = ['Kevin Gilpin']
   spec.email         = ['kgilpin@gmail.com']

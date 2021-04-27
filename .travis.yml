@@ -4,3 +4,20 @@ cache: bundler
 rvm:
   - 2.6.6
 before_install: gem install bundler -v 2.1.4
+before_deploy:
+  - |
+    nvm install --lts \
+      && nvm use --lts \
+      && npm i -g \
+        semantic-release \
+        @semantic-release/git \
+        @semantic-release/changelog \
+        semantic-release-rubygem
+
+deploy:
+  - provider: script
+    script: ./release.sh
+    on:
+      branch: main
+
+
