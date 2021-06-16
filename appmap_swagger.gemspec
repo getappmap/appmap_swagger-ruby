@@ -7,13 +7,13 @@ require 'appmap/swagger/version'
 Gem::Specification.new do |spec|
   # ability to parameterize gem name is added intentionally, 
   # to support the possibility of unofficial releases, e.g. during CI tests
-  spec.name          = (ENV['GEM_ALTERNATIVE_NAME'].to_s.empty? ? 'appmap_swagger' : ENV["GEM_ALTERNATIVE_NAME"] )
+  spec.name          = (ENV['GEM_ALTERNATIVE_NAME'].to_s.empty? ? 'appmap-swagger' : ENV["GEM_ALTERNATIVE_NAME"] )
   spec.version       = AppMap::Swagger::VERSION
   spec.authors       = ['Kevin Gilpin']
   spec.email         = ['kgilpin@gmail.com']
 
   spec.summary       = %q{Provides a Rake task to generate Swagger from AppMap data}
-  spec.homepage      = 'https://github.com/applandinc/appmap_swagger-ruby'
+  spec.homepage      = 'https://github.com/applandinc/appmap-swagger-ruby'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
 
@@ -36,7 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rdoc'
   spec.add_dependency 'reverse_markdown'
   spec.add_dependency 'activesupport'
-  spec.add_dependency 'hashdiff'
 
   spec.add_development_dependency 'pry-byebug'
   spec.add_development_dependency 'minitest'

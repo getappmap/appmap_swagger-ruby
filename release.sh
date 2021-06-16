@@ -9,7 +9,7 @@ fi
 if [ ! -z "$GEM_ALTERNATIVE_NAME" ]; then
     echo "Release: GEM_ALTERNATIVE_NAME=$GEM_ALTERNATIVE_NAME"
 else
-    echo "No GEM_ALTERNATIVE_NAME is provided, releasing gem with default name ('appmap_swagger')"
+    echo "No GEM_ALTERNATIVE_NAME is provided, releasing gem with default name ('appmap-swagger')"
 fi
 
 set -x

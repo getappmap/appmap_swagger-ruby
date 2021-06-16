@@ -1,5 +1,6 @@
-# v0.3.0 - Pending
+# v0.3.0
 
+* Rename to `appmap-swagger`.
 * Bundle Node.js package `@appland/cli` with this gem.
 
 # v0.2.0
