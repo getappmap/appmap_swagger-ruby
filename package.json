@@ -1,0 +1,13 @@
+{
+  "name": "appmap_swagger-ruby",
+  "version": "1.0.0",
+  "description": "Generate Swagger / OpenAPI from AppMaps",
+  "main": "index.js",
+  "repository": "git@github.com:applandinc/appmap_swagger-ruby",
+  "author": "Kevin Gilpin <kgilpin@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@appland/cli": "^1.0.3"
+  }
+}

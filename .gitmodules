@@ -1,0 +1,3 @@
+[submodule "appmap-js"]
+	path = appmap-js
+	url = https://github.com/applandinc/appmap-js

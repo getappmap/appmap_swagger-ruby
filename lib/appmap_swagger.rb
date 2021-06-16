@@ -1,3 +1,13 @@
 require 'appmap/swagger/version'
-require 'appmap/swagger/rake_task'
-require 'appmap/swagger/rake_diff_task'
+require 'appmap/swagger/configuration'
+
+def rake_defined?
+  require 'rake'
+  true
+rescue LoadError
+  false
+end
+
+if rake_defined?
+  require 'appmap/swagger/rake_tasks'
+end
