@@ -1,10 +1,11 @@
 # Archived
 
-This project is archived because the functionality has moved to [https://github.com/applandinc/appmap-ruby](https://appland.com/docs/reference/appmap-ruby.html).
+This project is archived because the functionality has moved to [AppMap OpenAPI](https://appmap.io/docs/reference/appmap-client-cli.html#openapi).  
+[How to use AppMap OpenAPI](https://appmap.io/docs/your-first-15-minutes-with-appmap/generate-openapi-from-appmaps.html)
 
 # About
 
-`appmap_swagger` is a Ruby gem which provides a Rake task to generate [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/applandinc/appmap-ruby) data.
+`appmap_swagger` is a Ruby gem which provides a Rake task to generate [Swagger 3](https://swagger.io/specification/) (aka OpenAPI) YAML from [AppMap](https://github.com/getappmap/appmap-ruby) data.
 
 It depends on an NPM package called [@appland/appmap-swagger](https://www.npmjs.com/package/@appland/appmap-swagger), which does most of the heavy lifting of converting AppMaps to Swagger.
 
@@ -16,7 +17,7 @@ To the NPM package, this gem adds:
 
 # Usage
 
-Visit the [AppMap Swagger for Ruby](https://appland.com/docs/reference/appmap-swagger-ruby.html) reference page on AppLand.com for a complete reference guide.
+Visit the [AppMap Swagger for Ruby](https://appmap.io/docs/reference/appmap-swagger-ruby.html) reference page on appmap.io for a complete reference guide.
 
 ## Development
 
@@ -26,7 +27,7 @@ To release a new version, update the version number in `version.rb`, and then ru
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/applandinc/appmap_swagger-ruby.
+Bug reports and pull requests are welcome on GitHub at https://github.com/getappmap/appmap_swagger-ruby.
 
 ## License
 
